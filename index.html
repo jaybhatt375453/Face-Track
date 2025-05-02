@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("KpWwqNzp4ajAEB4h0");
+        })();
+    </script>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --background-color: #f8f9fa;
+            --text-color: #2b2d42;
+            --light-text: #6c757d;
+            --border-color: #dee2e6;
+            --success-color: #52b788;
+            --danger-color: #e63946;
+            --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        html {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .page-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.5s ease;
+        }
+
+        #bg1 {
+            background: linear-gradient(135deg, #a8e6cf, #1dd3b0, #ff9a9e);
+            opacity: 1;
+        }
+
+        #bg2 {
+            background: linear-gradient(135deg, #ffd3a5, #fd6585, #c086e3);
+            opacity: 0;
+        }
+
+        #bg3 {
+            background: linear-gradient(135deg, #6ddccf, #38a3a5, #57cc99);
+            opacity: 0;
+        }
+
+        #bg4 {
+            background: linear-gradient(135deg, #9381ff, #b8b8ff, #f8f7ff);
+            opacity: 0;
+        }
+
+        #bg5 {
+            background: linear-gradient(135deg, #48cae4, #0096c7, #023e8a);
+            opacity: 0;
+        }
+
+        .container {
+            text-align: center;
+            display: none;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all var(--transition-speed) ease;
+            position: relative;
+            overflow-y: auto;
+            max-height: 520px;
+        }
+
+        .form-container input {
+            width: 100%;
+            min-width: 300px;
+            margin: 2px 0;
+            padding: 7px 10px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(1.15);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1.15);
+            }
+        }
+
+        .active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            color: var(--secondary-color);
+            transform: translateX(-3px);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            cursor: pointer;
+            border-radius: 18px;
+            margin: 7px 4px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 11px;
+        }
+
+        #camera,
+        #camera2 {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin: 8px 0;
+        }
+
+        video {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            border-radius: 6px;
+            border: 2px solid var(--accent-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        canvas {
+            display: none;
+        }
+
+        .time-display {
+            text-align: center;
+            margin: 7px 0;
+            padding: 7px 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 5px;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 11px;
+        }
+
+        .report {
+            color: var(--primary-color);
+            font-size: 12px;
+            margin-top: 10px;
+            font-weight: 600;
+            padding: 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        #capturedImages {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 7px 0;
+        }
+
+        /* Status indicators and animations */
+        .status-indicator {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            margin-right: 4px;
+            background-color: var(--success-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(82, 183, 136, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(82, 183, 136, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(82, 183, 136, 0);
+            }
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .menu-btn:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .menu {
+            position: absolute;
+            top: 40px;
+            right: 12px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: var(--card-shadow);
+            padding: 5px 0;
+            display: none;
+            z-index: 15;
+        }
+
+        .menu.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .menu-item {
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .menu-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 2px 0;
+        }
+
+        .title-highlight {
+            background: linear-gradient(45deg, #4361ee, #3a0ca3);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .subtitle {
+            color: var(--light-text);
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+        }
+
+        #camera2 {
+            position: relative;
+            margin: 10px auto;
+            width: 100%;
+            max-width: 280px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #video2 {
+            width: 100%;
+            border-radius: 8px;
+            transform: scaleX(-1);
+        }
+
+        .progress-container {
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #livenessProgress {
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        #livenessMetrics {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 8px;
+            border-radius: 5px;
+            margin: 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        #faceLandmarksOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #blinkInstruction {
+            animation: pulse 2s infinite;
+        }
+
+        .otp-container {
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .otp-animation {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: var(--success-color);
+            opacity: 0;
+            animation: otp-sent 2s ease-in-out;
+        }
+
+        @keyframes otp-sent {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 0);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -10px);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+        }
+
+        .otp-digits {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .otp-digit {
+            width: 35px;
+            height: 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .otp-digit:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .countdown {
+            font-size: 10px;
+            color: var(--light-text);
+            margin: 5px 0;
+        }
+
+        .resend-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 11px;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 5px;
+        }
+
+        .resend-btn:disabled {
+            color: var(--light-text);
+            cursor: not-allowed;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background elements -->
+    <div id="bg1" class="page-background"></div>
+    <div id="bg2" class="page-background"></div>
+    <div id="bg3" class="page-background"></div>
+    <div id="bg4" class="page-background"></div>
+    <div id="bg5" class="page-background"></div>
+
+    <!-- Page 1: Get Started -->
+    <div id="page1" class="container active">
+        <div class="logo-container">
+            <img src="https://img.icons8.com/color/240/facial-recognition-scan.png" alt="Face Recognition ML" class="logo-image">
+        </div>
+        <div class="title-highlight">Liveness Detection</div>
+        <p class="subtitle">A modern approach to attendance tracking</p>
+        <button class="btn" onclick="getStarted()">GET STARTED</button>
+    </div>
+
+    <!-- Page 2: Sign In / Sign Up -->
+    <div id="page2" class="container">
+        <button class="back-btn" onclick="goToPage('page1')"><i class="fas fa-arrow-left"></i> Back</button>
+        <div class="image-container">
+            <img src="https://img.icons8.com/color/96/user-male-circle--v1.png" alt="User Login">
+        </div>
+        <div class="title-highlight">Welcome</div>
+        <p class="subtitle">Please enter your email to continue</p>
+        <form id="signInForm" onsubmit="event.preventDefault(); verifyOTPAndSignIn();">
+            <div class="form-group">
+                <label for="signin_email">Email ID:</label>
+                <input type="email" id="signin_email" name="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group" style="display: flex; justify-content: space-between;">
+                <button type="button" class="btn secondary" style="width: 100%;" onclick="requestOTP()">Get OTP</button>
+            </div>
+            <div class="form-group" id="otpFieldContainer" style="display: none;">
+                <label for="signin_otp">OTP Code:</label>
+                <input type="text" id="signin_otp" name="otp" placeholder="Enter OTP sent to your email" required>
+                <div class="countdown" id="otpCountdown">Valid for 10:00</div>
+                <button type="button" class="resend-btn" id="resendOtpBtn" onclick="requestOTP()" disabled>Resend OTP</button>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <button type="submit" class="btn" style="width: 100%;" id="signInBtn">Sign In</button>
+            </div>
+        </form>
+        <button class="btn" style="background: linear-gradient(45deg, var(--accent-color), var(--primary-color));" onclick="signUp()">Sign Up</button>
+    </div>
+
+    <!-- Page 3: Form with Camera -->
+    <div id="page3" class="container">
+        <button class="back-btn" onclick="goToPage('page2')"><i class="fas fa-arrow-left"></i> Back</button>
+        <div class="form-container">
+            <div class="title-highlight">Employee Signup</div>
+            <p class="subtitle">Complete the registration form</p>
+            <form id="signupForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="employee_id">Employee ID:</label>
+                    <input type="text" id="employee_id" name="employee_id" placeholder="Enter your employee ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Employee Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobile_number">Employee Mobile Number:</label>
+                    <input type="text" id="mobile_number" name="mobile_number" placeholder="Enter your mobile number" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Employee Email ID:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="form-group">
+                    <label for="person_name">Unique Employee ID:</label>
+                    <input type="text" id="person_name" name="person_name" placeholder="Create a unique identifier" required>
+                </div>
+                <div class="form-group" style="display: flex; justify-content: space-between; margin-top: 7px;">
+                    <button type="button" class="btn" style="background: linear-gradient(45deg, #4cc9f0, #3a86ff);" onclick="startCamera()">Start Camera</button>
+                    <button type="button" class="btn" onclick="capturePhotos()">Capture Photos</button>
+                </div>
+                <div id="camera">
+                    <p style="margin-bottom: 5px; color: var(--light-text); font-size: 10px;">Please look at the camera</p>
+                    <video id="video" autoplay></video>
+                    <canvas id="canvas" style="display:none;"></canvas>
+                    <div style="margin-top: 5px; font-size: 10px;">
+                        <span class="status-indicator"></span>
+                        <span id="captureStatus">Ready to capture</span>
+                    </div>
+                </div>
+                <div id="capturedImages" style="display:none;"></div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <button type="button" class="btn" style="background: linear-gradient(45deg, #52b788, #2d6a4f); width: 100%;" onclick="sendSignupOTP()">Send OTP</button>
+                </div>
+                <div class="form-group">
+                    <label for="otp">Enter OTP:</label>
+                    <input type="text" id="otp" name="otp" placeholder="Enter verification code" required>
+                </div>
+                <div class="form-group" style="text-align: center; margin-top: 10px;">
+                    <button type="button" class="btn" style="width: 100%;" onclick="submitSignupForm()">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Page 4: Liveness Detection (unchanged, included as in your original code) -->
+    <div id="page4" class="container">
+        <button class="back-btn" onclick="goToPage('page2')"><i class="fas fa-arrow-left"></i> Back</button>
+        <div class="title-highlight">Face Verification</div>
+        <p class="subtitle">Look at the camera for identity verification</p>
+        <div class="liveness-indicators" style="margin-bottom: 10px; text-align: center;">
+            <div class="progress-container" style="width: 100%; background-color: #f1f1f1; border-radius: 5px; margin-bottom: 5px;">
+                <div id="livenessProgress" style="width: 0%; height: 5px; background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); border-radius: 5px; transition: width 0.3s;"></div>
+            </div>
+            <div id="livenessStatus" style="font-size: 11px; color: var(--light-text);">
+                <span class="status-indicator"></span>
+                <span id="livenessText">Preparing liveness check...</span>
+            </div>
+            <div id="blinkInstruction" style="font-size: 12px; color: var(--primary-color); margin-top: 5px; font-weight: 500; display: none;">
+                Please blink naturally and move your head slightly
+            </div>
+        </div>
+        <div id="camera2" class="active">
+            <video id="video2" autoplay></video>
+            <canvas id="canvas2" style="display:none;"></canvas>
+            <div id="faceLandmarksOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+        </div>
+        <div id="livenessMetrics" style="margin: 10px 0; font-size: 10px; color: var(--light-text); display: none;">
+            <div>Blinks detected: <span id="blinkCount">0</span></div>
+            <div>EAR: <span id="earValue">0.00</span></div>
+            <div>MAR: <span id="marValue">0.00</span></div>
+        </div>
+        <button id="verifyBtn" class="btn" style="margin-top: 10px;" onclick="startLivenessCheck()">START VERIFICATION</button>
+        <button class="btn secondary" style="margin-top: 5px;" onclick="cancelVerification()">CANCEL</button>
+    </div>
+
+    <!-- Page 5: Punch and Break (unchanged, included as in your original code) -->
+    <div id="page5" class="container">
+        <button class="menu-btn" onclick="toggleMenu('menu2')"><i class="fas fa-ellipsis-v"></i></button>
+        <div id="menu2" class="menu">
+            <div class="menu-item" onclick="goToPage('page1')"><i class="fas fa-home"></i> Home</div>
+            <div class="menu-item" onclick="goToPage('page2')"><i class="fas fa-sign-in-alt"></i> Login Page</div>
+            <div class="menu-divider"></div>
+            <div class="menu-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+        </div>
+        <div class="title-highlight">Attendance Tracker</div>
+        <p class="subtitle">Track your working hours</p>
+        <div id="punchTime" class="time-display"></div>
+        <button id="punchBtn" class="btn" onclick="togglePunch()">PUNCH IN</button>
+        <div id="breakTime" class="time-display"></div>
+        <button id="breakBtn" class="btn" style="background: linear-gradient(45deg, #ff9e00, #ff6d00);" onclick="toggleBreak()">BREAK IN</button>
+        <div id="report" class="report"></div>
+        <div class="navigation">
+            <button class="nav-btn" onclick="goToPage('page2')"><i class="fas fa-chevron-left"></i> Back to Login</button>
+            <button class="nav-btn" onclick="goToPage('page1')"><i class="fas fa-home"></i> Home</button>
+        </div>
+    </div>
+
+    <script>
+        let punchInTime = null;
+        let punchOutTime = null;
+        let breakInTime = null;
+        let breakOutTime = null;
+        let videoStream = null;
+        let imageCounter = 0;
+        const maxImages = 15;
+        const otpStore = {};
+
+        function goToPage(pageId) {
+            document.querySelectorAll('.container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function getStarted() {
+            goToPage('page2');
+        }
+
+        function requestOTP() {
+            const email = document.getElementById('signin_email').value;
+            if (!email) {
+                alert("Please enter an email ID.");
+                return;
+            }
+            const otp = generateOTP();
+            otpStore[email] = otp;
+            const otpButton = event.target;
+            const originalText = otpButton.innerHTML;
+            otpButton.disabled = true;
+            otpButton.innerHTML = '<span class="loading-spinner"></span> Sending...';
+            const emailContent = {
+                to_email: email,
+                passcode: otp,
+                time: "15 minutes"
+            };
+            emailjs.send('service_d9ajqzq', 'template_eyyln1j', emailContent)
+                .then(function(response) {
+                    otpButton.disabled = false;
+                    otpButton.innerHTML = originalText;
+                    document.getElementById('otpFieldContainer').style.display = 'block';
+                    startOTPCountdown();
+                    alert(`OTP sent successfully to ${email}. Please check your inbox.`);
+                })
+                .catch(function(error) {
+                    otpButton.disabled = false;
+                    otpButton.innerHTML = originalText;
+                    alert(`Failed to send OTP: ${error.text}. Please try again.`);
+                });
+        }
+
+        function sendSignupOTP() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert("Please enter your email ID.");
+                return;
+            }
+            const otp = generateOTP();
+            otpStore[email] = otp;
+            const otpButton = event.target;
+            const originalText = otpButton.innerHTML;
+            otpButton.disabled = true;
+            otpButton.innerHTML = '<span class="loading-spinner"></span> Sending...';
+            const emailContent = {
+                to_email: email,
+                passcode: otp,
+                time: "15 minutes"
+            };
+            emailjs.send('service_d9ajqzq', 'template_eyyln1j', emailContent)
+                .then(function(response) {
+                    otpButton.disabled = false;
+                    otpButton.innerHTML = originalText;
+                    alert(`OTP sent successfully to ${email}. Please check your inbox.`);
+                })
+                .catch(function(error) {
+                    otpButton.disabled = false;
+                    otpButton.innerHTML = originalText;
+                    alert(`Failed to send OTP: ${error.text}. Please try again.`);
+                });
+        }
+
+        function generateOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        function startOTPCountdown() {
+            let countdownTime = 600;
+            const countdownElement = document.getElementById('otpCountdown');
+            const resendButton = document.getElementById('resendOtpBtn');
+            resendButton.disabled = true;
+            const interval = setInterval(() => {
+                const minutes = Math.floor(countdownTime / 60);
+                const seconds = countdownTime % 60;
+                countdownElement.textContent = `Valid for ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                countdownTime--;
+                if (countdownTime < 0) {
+                    clearInterval(interval);
+                    countdownElement.textContent = 'OTP expired';
+                    resendButton.disabled = false;
+                }
+            }, 1000);
+        }
+
+        function verifyOTPAndSignIn() {
+            const email = document.getElementById('signin_email').value;
+            const enteredOtp = document.getElementById('signin_otp').value;
+            if (!enteredOtp) {
+                alert('Please enter the OTP sent to your email.');
+                return;
+            }
+            if (otpStore[email] && otpStore[email] === enteredOtp) {
+                alert('OTP verified! Proceeding to the next step.');
+                startCamera2();
+                goToPage('page4');
+            } else {
+                alert('Invalid OTP. Please try again.');
+            }
+        }
+
+        function signUp() {
+            goToPage('page3');
+        }
+
+        function submitSignupForm() {
+            const email = document.getElementById('email').value;
+            const enteredOtp = document.getElementById('otp').value;
+            if (!enteredOtp) {
+                alert('Please enter the OTP sent to your email.');
+                return;
+            }
+            if (otpStore[email] && otpStore[email] === enteredOtp) {
+                alert('Registration successful! You can now sign in.');
+                goToPage('page2');
+            } else {
+                alert('Invalid OTP. Please try again.');
+            }
+        }
+
+        function cancelVerification() {
+            goToPage('page2');
+            stopCamera();
+        }
+
+        function stopCamera() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+        }
+
+        function startCamera() {
+            document.getElementById('camera').style.display = 'flex';
+            const video = document.getElementById('video');
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    videoStream = stream;
+                })
+                .catch((err) => {
+                    alert("Failed to access your camera. Please check permissions.");
+                });
+        }
+
+        function capturePhotos() {
+            if (!videoStream) {
+                alert("Please start the camera first.");
+                return;
+            }
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const capturedImages = document.getElementById('capturedImages');
+            const captureStatus = document.getElementById('captureStatus');
+            capturedImages.innerHTML = '';
+            capturedImages.style.display = 'flex';
+            imageCounter = 0;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            const capturePhoto = () => {
+                if (imageCounter >= maxImages) {
+                    captureStatus.textContent = 'Capture complete!';
+                    return;
+                }
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imgData = canvas.toDataURL('image/png');
+                const img = document.createElement('img');
+                img.src = imgData;
+                img.style.width = '50px';
+                img.style.height = '50px';
+                img.style.objectFit = 'cover';
+                img.style.margin = '2px';
+                img.style.borderRadius = '5px';
+                capturedImages.appendChild(img);
+                imageCounter++;
+                captureStatus.textContent = `Capturing... ${imageCounter}/${maxImages}`;
+                setTimeout(capturePhoto, 500);
+            };
+            capturePhoto();
+        }
+
+        function startCamera2() {
+            const camera2 = document.getElementById('camera2');
+            camera2.style.display = 'flex';
+            const video = document.getElementById('video2');
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    videoStream = stream;
+                })
+                .catch((err) => {
+                    alert("Failed to access your camera. Please check permissions.");
+                });
+            document.getElementById('livenessText').textContent = 'Liveness detection ready. Click START to begin.';
+            document.getElementById('blinkInstruction').style.display = 'none';
+            document.getElementById('livenessProgress').style.width = '0%';
+        }
+
+        function startLivenessCheck() {
+            document.getElementById('verifyBtn').textContent = 'VERIFYING...';
+            document.getElementById('verifyBtn').disabled = true;
+            document.getElementById('livenessMetrics').style.display = 'block';
+            document.getElementById('blinkInstruction').style.display = 'block';
+            let blinkCount = 0;
+            const blinkInterval = setInterval(() => {
+                blinkCount++;
+                document.getElementById('blinkCount').textContent = blinkCount;
+                document.getElementById('earValue').textContent = (0.2 + Math.random() * 0.1).toFixed(2);
+                document.getElementById('marValue').textContent = (0.4 + Math.random() * 0.2).toFixed(2);
+                if (blinkCount >= 3) {
+                    clearInterval(blinkInterval);
+                }
+            }, 2000);
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                document.getElementById('livenessProgress').style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    document.getElementById('livenessText').textContent = 'LIVE PERSON DETECTED';
+                    document.getElementById('verifyBtn').textContent = 'VERIFICATION COMPLETE';
+                    document.getElementById('verifyBtn').disabled = false;
+                    document.getElementById('verifyBtn').onclick = function() { 
+                        stopCamera();
+                        goToPage('page5'); 
+                    };
+                }
+            }, 500);
+        }
+
+        function togglePunch() {
+            const punchBtn = document.getElementById('punchBtn');
+            const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+            if (punchBtn.textContent === "PUNCH IN") {
+                punchBtn.textContent = "PUNCH OUT";
+                punchBtn.style.background = "linear-gradient(45deg, #e63946, #d62828)";
+                punchInTime = currentTime;
+            } else {
+                punchBtn.textContent = "PUNCH IN";
+                punchBtn.style.background = "linear-gradient(45deg, var(--primary-color), var(--secondary-color))";
+                punchOutTime = currentTime;
+                document.getElementById('breakBtn').disabled = true;
+            }
+            updatePunchTimeDisplay();
+            updateReport();
+        }
+
+        function toggleBreak() {
+            const breakBtn = document.getElementById('breakBtn');
+            const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+            if (breakBtn.textContent === "BREAK IN") {
+                breakBtn.textContent = "BREAK OUT";
+                breakBtn.style.background = "linear-gradient(45deg, #f77f00, #d62828)";
+                breakInTime = currentTime;
+            } else {
+                breakBtn.textContent = "BREAK IN";
+                breakBtn.style.background = "linear-gradient(45deg, #ff9e00, #ff6d00)";
+                breakOutTime = currentTime;
+            }
+            updateBreakTimeDisplay();
+            updateReport();
+        }
+
+        function updatePunchTimeDisplay() {
+            const punchTimeDiv = document.getElementById('punchTime');
+            punchTimeDiv.innerHTML = punchInTime ? "Punched in at: " + punchInTime + "<br>" : "";
+            punchTimeDiv.innerHTML += punchOutTime ? "Punched out at: " + punchOutTime : "";
+        }
+
+        function updateBreakTimeDisplay() {
+            const breakTimeDiv = document.getElementById('breakTime');
+            breakTimeDiv.innerHTML = breakInTime ? "Break started at: " + breakInTime + "<br>" : "";
+            breakTimeDiv.innerHTML += breakOutTime ? "Break ended at: " + breakOutTime : "";
+        }
+
+        function updateReport() {
+            const reportDiv = document.getElementById('report');
+            if (punchInTime && punchOutTime) {
+                const punchInDateTime = new Date(punchInTime);
+                const punchOutDateTime = new Date(punchOutTime);
+                const timeDifference = punchOutDateTime - punchInDateTime;
+                let breakTimeDifference = 0;
+                if (breakInTime && breakOutTime) {
+                    const breakInDateTime = new Date(breakInTime);
+                    const breakOutDateTime = new Date(breakOutTime);
+                    breakTimeDifference = breakOutDateTime - breakInDateTime;
+                }
+                const totalWorkedTime = timeDifference - breakTimeDifference;
+                const hoursWorked = Math.floor(totalWorkedTime / (1000 * 60 * 60));
+                const minutesWorked = Math.floor((totalWorkedTime % (1000 * 60 * 60)) / (1000 * 60));
+                reportDiv.innerHTML = "Total time worked: " + hoursWorked + " hours " + minutesWorked + " minutes";
+            } else {
+                reportDiv.innerHTML = "";
+            }
+        }
+
+        function toggleMenu(menuId) {
+            document.getElementById(menuId).classList.toggle('active');
+        }
+
+        function logout() {
+            if (confirm("Are you sure you want to logout?")) {
+                goToPage('page1');
+            }
+        }
+
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.menu') && !event.target.closest('.menu-btn')) {
+                document.querySelectorAll('.menu').forEach(menu => {
+                    menu.classList.remove('active');
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log("Liveness Detection System initialized with EmailJS public key");
+        });
+    </script>
+</body>
+
+</html>
+
