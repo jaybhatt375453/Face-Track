@@ -142,13 +142,13 @@ Steps:
 
 ## 👨‍💻 Author
 
-Built with ❤️ by [Janak Makadia](https://github.com/Janak-Makadia345) and team.  
-Also see: [Jay Bhatt](https://github.com/jaybhatt375453)
+Built with ❤️ by [Jay Bhatt](https://github.com/jaybhatt375453) and team.  
+Also see: [Janak Makadia](https://github.com/jaybhatt375453)
 
 ---
 
 ## 📬 Contact
 
-📧 makadiask901@gmail.com  
-🌐 [LinkedIn](https://www.linkedin.com/in/janak-makadia)
+📧 jay375453@gmail.com 
+🌐 [LinkedIn]()
 
