@@ -150,5 +150,5 @@ Also see: [Janak Makadia](https://github.com/jaybhatt375453)
 ## 📬 Contact
 
 📧 jay375453@gmail.com 
-🌐 [LinkedIn]()
+🌐 [LinkedIn](https://www.linkedin.com/in/jay-bhatt-6b9130244/)
 
